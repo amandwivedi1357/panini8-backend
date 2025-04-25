@@ -13,12 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
+app.use(cors({
+  origin:'*'
+}));
 // Middleware
 app.use(express.json({ limit: '30mb' }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
-app.use(cors({
-  origin:['*']
-}));
+
 
 // Routes
 app.use('/api/users', userRoutes);
