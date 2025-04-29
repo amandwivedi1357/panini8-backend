@@ -42,17 +42,16 @@ export const getCommentsByPost = async (req, res) => {
     const options = {
       page: parseInt(page, 10),
       limit: parseInt(limit, 10),
-      sort: { createdAt: -1 },
-      populate: { path: 'author', select: 'username name avatar' }
+      sort: { createdAt: -1 }
     };
 
     const comments = await Comment.find({ post: postId, parent: null })
       .skip((options.page - 1) * options.limit)
       .limit(options.limit)
       .sort(options.sort)
-      .populate(options.populate)
+      .populate('author', 'username name avatar')
       .populate({
-        path: 'replies',
+        path: 'parent',
         populate: { path: 'author', select: 'username name avatar' }
       });
 

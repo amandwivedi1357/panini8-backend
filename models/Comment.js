@@ -77,6 +77,23 @@ commentSchema.post('remove', async function() {
   });
 });
 
+// Virtual to get child comments (replies)
+commentSchema.virtual('replies', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'parent'
+});
+
+// Enable virtuals in toJSON
+commentSchema.set('toJSON', {
+  virtuals: true
+});
+
+// Enable virtuals in toObject
+commentSchema.set('toObject', {
+  virtuals: true
+});
+
 const Comment = mongoose.model('Comment', commentSchema);
 
 export default Comment;
